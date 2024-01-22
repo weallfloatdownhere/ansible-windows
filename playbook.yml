@@ -1,0 +1,10 @@
+- name: Common windows tasks executer
+  hosts: localhost
+  tasks:
+  - name: Include vars
+    ansible.builtin.include_vars:
+      file: vars/sample.yml
+      name: instructions
+
+  - name: Lauching Ansible playbook
+    include_tasks: tasks/main.yml

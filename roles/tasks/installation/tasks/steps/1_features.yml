@@ -1,0 +1,34 @@
+- debug:
+    msg: "{{ feature.name }} {{ feature.source }} {{ feature.state|default('present') }} {{ feature.reboot_if_needed|default(False) }} {{ feature.include_sub_features|default(False) }} {{ feature.include_management_tools|default(False) }}"
+  when: feature.source is defined
+
+- debug:
+    msg: "{{ feature.name }} {{ feature.state|default('present') }} {{ feature.reboot_if_needed|default(False) }} {{ feature.include_sub_features|default(False) }} {{ feature.include_management_tools|default(False) }}"
+  when: feature.source is not defined
+
+- debug:
+    msg: "REBOOT"
+  when: feature.reboot_if_needed|default(False)
+
+#- name: Install features
+#  win_feature:
+#    name: "{{ feature.name }}"
+#    state: "{{ feature.state|default('present') }}"
+#    source: "{{ feature.source }}"
+#    include_sub_features: "{{ feature.include_sub_features|default(False) }}"
+#    include_management_tools: "{{ feature.include_management_tools|default(False) }}"
+#  register: win_feature
+#  when: feature.source is defined
+
+#- name: Install features
+#  win_feature:
+#    name: "{{ feature.name }}"
+#    state: "{{ feature.state|default('present') }}"
+#    include_sub_features: "{{ feature.include_sub_features|default(False) }}"
+#    include_management_tools: "{{ feature.include_management_tools|default(False) }}"
+#  register: win_feature
+#  when: feature.source is not defined
+
+#- name: Reboot if installing Web-Server feature requires it
+#  win_reboot:
+#  when: win_feature.reboot_required and feature.reboot_if_needed|default(False)

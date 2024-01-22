@@ -1,0 +1,24 @@
+- name: "Starting the step WINDOWS REGISTRIES EDITION."
+  include_tasks: steps/0_regedits.yml
+  vars:
+    registry:
+      name: "{{ winreg.name }}"
+      path: "{{ winreg.path }}"
+      data: "{{ winreg.data }}"
+      type: "{{ winreg.type }}"
+      state: "{{ winreg.state }}"
+      delete_key: "{{ winreg.delete_key }}"
+  when: "{{ winreg.condition | default(True) }}"
+  loop: "{{ step_values.regedits }}"
+  loop_control: { loop_var: winreg }
+
+- name: "Starting the step WINDOWS SERVICES."
+  include_tasks: steps/1_services.yml
+  vars:
+    service:
+        name: "{{ winservice.name }}"
+        state: "{{ winservice.state }}"
+        start_mode: "{{ winservice.start_mode }}"
+  when: "{{ winservice.condition | default(True) }}"
+  loop: "{{ step_values.services }}"
+  loop_control: { loop_var: winservice }

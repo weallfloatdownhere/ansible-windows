@@ -1,0 +1,26 @@
+# CHOCOLATEY
+- name: "Starting the step CHOCOLATEY."
+  include_tasks: steps/0_chocolatey.yml
+  vars: 
+    package:
+        name: "{{ chocolatey_package.name }}"
+        state: "{{ chocolatey_package.state | default('present') }}"
+        version: "{{ chocolatey_package.version | default('latest') }}"
+  when: "{{ chocolatey_package.condition | default(True) }}"
+  loop: "{{ step_values.chocolatey }}"
+  loop_control: { loop_var: chocolatey_package }
+
+# FEATURES
+- name: "Starting the step FEATURES."
+  include_tasks: steps/1_features.yml
+  vars: 
+    feature:
+        name: "{{ feature.name }}"
+        source: "{{ feature.source }}"
+        state: "{{ feature.state }}"
+        reboot_if_needed: "{{ feature.reboot_if_needed }}"
+        include_sub_features: "{{ feature.include_sub_features }}"
+        include_management_tools: "{{ feature.include_management_tools }}"
+  when: "{{ feature.condition | default(True) }}"
+  loop: "{{ step_values.features }}"
+  loop_control: { loop_var: feature }

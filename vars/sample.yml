@@ -1,0 +1,65 @@
+phases:
+  0_checks:
+    checks:
+      stats:
+        - path: /tmp/absent.txt
+          register: absent_reg
+          condition: 1<2
+        - path: /tmp/exists.txt
+          register: exists_reg
+          condition: 1==1
+        - path: /tmp/exists2.txt
+          register: exists2_reg
+
+  1_config:
+    files:
+      clean:
+        - path: /tmp/clean-me.txt
+          condition: 1<2
+      downloads:
+        - url: https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Test-Logo.svg/783px-Test-Logo.svg.png
+          destination: /tmp/test-logo.png
+          archive:
+            archive: True
+            destination: /tmp/test
+          force: True
+          condition: 1<2
+
+  2_setup:
+    system:
+      services:
+        - name: spooler
+          start_mode: auto
+          state: started
+          condition: 1<2
+      regedits:
+        - name: Language Hotkey    
+          path: HKCU:\Keyboard Layout\Toggle
+          data: 3
+          type: dword
+          state: absent
+          delete_key: yes
+          condition: 1<2
+      #commands: {}
+      #firewall: {}
+
+  3_install:
+    installation:
+      chocolatey:
+        - name: packagename
+          state: present
+          version: latest
+          condition: 1<2
+      features:
+        - name: Net-Framework-Features
+          source: C:\Temp\iso\sources\sxs
+          state: present
+          reboot_if_needed: False
+          include_sub_features: False
+          include_management_tools: True
+        - name: Net-Framework-Features-NoSource
+          state: present
+          reboot_if_needed: True
+          include_sub_features: False
+          include_management_tools: True
+          condition: 1<2

@@ -1,0 +1,17 @@
+# download
+- debug:
+    msg: "{{ download.url }} {{ download.destination }} {{ download.force }} {{ download.archive.archive }} {{ download.archive.destination }}"
+
+#- name: Download earthrise.jpg to specified path
+#  win_get_url:
+#    url: "{{ download.url }}"
+#    dest: "{{ download.destination }}"
+#    force: "{{ download.force }}"
+
+#- name: Recursively decompress GZ files in ApplicationLogs.zip
+#  win_unzip:
+#    src: "{{ download.destination }}"
+#    dest: "{{ download.archive.destination }}"
+#    recurse: yes
+#    delete_archive: yes
+#  when: download.archive.archive and download.archive.destination != 'undefined'
