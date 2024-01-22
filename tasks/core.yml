@@ -1,6 +1,6 @@
 - name: Starting the tasks.
   # example: checks, download, system
-  include_role: { name: "tasks/{{ phase.key }}" }
+  include_role: { name: "{{ phase.key }}" }
   # Provides the step values to the called common sub-task
   vars: { step_values: "{{ phase.value }}" }
   # Loop through steps provided by ../main.yml
