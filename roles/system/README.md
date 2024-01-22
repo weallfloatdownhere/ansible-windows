@@ -1,3 +1,3 @@
-# Checks Phase
+# System
 
-Do everything related to pre-checks, pre-validation and target system is conformity.
+Everything related to the OS itself. For instance, for windows, this is the role taking care of regedits

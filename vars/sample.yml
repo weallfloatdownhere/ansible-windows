@@ -2,14 +2,11 @@ phases:
   0_checks:
     checks:
       stats:
-        - path: /tmp/absent.txt
-          register: absent_reg
-          condition: 1<2
         - path: /tmp/exists.txt
           register: exists_reg
           condition: 1==1
-        - path: /tmp/exists2.txt
-          register: exists2_reg
+        - path: /tmp/absent.txt
+          register: absent_reg
 
   1_config:
     files:
@@ -41,7 +38,6 @@ phases:
           delete_key: yes
           condition: 1<2
       #commands: {}
-      #firewall: {}
 
   3_install:
     installation:
@@ -63,3 +59,17 @@ phases:
           include_sub_features: False
           include_management_tools: True
           condition: 1<2
+
+  4_security:
+    security:
+      firewall:
+        rules:
+          - name: SMTP
+            localport: 25
+            action: allow
+            direction: in
+            protocol: tcp
+            state: present
+            enabled: yes
+            program: any
+            condition: 1<2
