@@ -33,6 +33,8 @@
       group: "{{ import.group }}"
       mode: "{{ import.mode }}"
       force: "{{ import.force | default(True) }}"
+      template:
+        vars: "{{ import.template.vars | default({}) }}"
   when: "{{ import.condition | default(True) }}"
   loop: "{{ step_values.imports }}"
   loop_control: { loop_var: import }

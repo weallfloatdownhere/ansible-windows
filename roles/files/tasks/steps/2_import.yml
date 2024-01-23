@@ -7,6 +7,7 @@
     - "{{ import.group }}"
     - "{{ import.mode }}"
     - "{{ import.force | default(True) }}"
+    - "{{ import.template.vars | default({}) }}"
 
 #- name: Import file
 #  template:
@@ -17,3 +18,4 @@
 #    mode: "{{ import.mode }}"
 #    force: "{{ import.force | default(True) }}"
 #    newline_sequence: '\r\n'
+#    vars: "{{ import.template.vars | default({}) }}"
