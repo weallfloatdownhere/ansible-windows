@@ -38,3 +38,14 @@
   when: "{{ importedfile.condition | default(True) }}"
   loop: "{{ step_values.imports }}"
   loop_control: { loop_var: importedfile }
+
+# SHORTCURTS
+- name: "Starting the step SHORTCURTS."
+  include_tasks: steps/3_shortcut.yml
+  vars:
+    shortcutlnk:
+      source: "{{ shortcuts.source }}"
+      destination: "{{ shortcuts.destination }}"
+  when: "{{ shortcuts.condition | default(True) }}"
+  loop: "{{ step_values.imports }}"
+  loop_control: { loop_var: shortcuts }
