@@ -4,7 +4,7 @@
   vars: 
     clean_path: "{{ cleanme.path }}"
   when: "{{ cleanme.condition | default(True) }}"
-  loop: "{{ step_values.clean }}"
+  with_items: "{{ step_values.clean }}"
   loop_control: { loop_var: cleanme }
 
 # DOWNLOAD
@@ -19,7 +19,7 @@
         archive: "{{ download.archive.archive }}"
         destination: "{{ download.archive.destination }}"
   when: "{{ download.condition | default(True) }}"
-  loop: "{{ step_values.downloads }}"
+  with_items: "{{ step_values.downloads }}"
   loop_control: { loop_var: download }
 
 # IMPORTS
@@ -36,7 +36,7 @@
       template:
         vars: "{{ importedfile.template.vars | default({}) }}"
   when: "{{ importedfile.condition | default(True) }}"
-  loop: "{{ step_values.imports }}"
+  with_items: "{{ step_values.imports }}"
   loop_control: { loop_var: importedfile }
 
 # SHORTCURTS
@@ -47,5 +47,5 @@
       source: "{{ shortcuts.source }}"
       destination: "{{ shortcuts.destination }}"
   when: "{{ shortcuts.condition | default(True) }}"
-  loop: "{{ step_values.imports }}"
+  with_items: "{{ step_values.imports }}"
   loop_control: { loop_var: shortcuts }

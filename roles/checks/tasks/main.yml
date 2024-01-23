@@ -5,5 +5,5 @@
     file_path: "{{ files_stats.path }}"
     register_name: "{{ files_stats.register }}"
   when: "{{ files_stats.condition | default(True) }}"
-  loop: "{{ step_values.stats }}"
+  with_items: "{{ step_values.stats }}"
   loop_control: { loop_var: files_stats }

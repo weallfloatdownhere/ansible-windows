@@ -12,5 +12,5 @@
       state: "{{ firewall_rule.state }}"
       enabled: "{{ firewall_rule.enabled }}"
   when: "{{ firewall_rule.condition | default(True) }}"
-  loop: "{{ step_values.firewall.rules }}"
+  with_items: "{{ step_values.firewall.rules }}"
   loop_control: { loop_var: firewall_rule }
