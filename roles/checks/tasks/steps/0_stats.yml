@@ -1,6 +1,8 @@
 # stats
 - debug:
-    msg: "FILEPATH: {{ file_path }} ---- REGISTER NAME: {{ register_name }}"
+    msg: 
+    - "{{ file_path }}" 
+    - "{{ register_name }}"
 
 #- name: Getting files/directories status
 #  ansible.windows.win_stat:
