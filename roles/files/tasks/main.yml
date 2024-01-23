@@ -24,17 +24,17 @@
 
 # IMPORTS
 - name: "Starting the step IMPORTS."
-  include_tasks: steps/2_imports.yml
+  include_tasks: steps/2_import.yml
   vars:
-    import:
-      source: "{{ import.source }}"
-      destination: "{{ import.destination }}"
-      owner: "{{ import.owner }}"
-      group: "{{ import.group }}"
-      mode: "{{ import.mode }}"
-      force: "{{ import.force | default(True) }}"
+    importedfile:
+      source: "{{ importedfile.source }}"
+      destination: "{{ importedfile.destination }}"
+      owner: "{{ importedfile.owner }}"
+      group: "{{ importedfile.group }}"
+      mode: "{{ importedfile.mode }}"
+      force: "{{ importedfile.force | default(True) }}"
       template:
-        vars: "{{ import.template.vars | default({}) }}"
-  when: "{{ import.condition | default(True) }}"
+        vars: "{{ importedfile.template.vars | default({}) }}"
+  when: "{{ importedfile.condition | default(True) }}"
   loop: "{{ step_values.imports }}"
-  loop_control: { loop_var: import }
+  loop_control: { loop_var: importedfile }

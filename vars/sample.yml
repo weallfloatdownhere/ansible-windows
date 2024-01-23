@@ -41,7 +41,7 @@ phases:
           condition: 1<2
   3_install:
     installation:
-      reboot_after: True
+      reboot_after: False # Reboot at the end of this installation phase
       chocolatey:
         - { name: packagename,state: present,version: latest,condition: 1<2 }
       features:

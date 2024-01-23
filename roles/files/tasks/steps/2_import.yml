@@ -1,21 +1,21 @@
 - name: Import file
   debug:
     msg:
-    - "{{ import.source }}"
-    - "{{ import.destination }}"
-    - "{{ import.owner }}"
-    - "{{ import.group }}"
-    - "{{ import.mode }}"
-    - "{{ import.force | default(True) }}"
-    - "{{ import.template.vars | default({}) }}"
+    - "{{ importedfile.source }}"
+    - "{{ importedfile.destination }}"
+    - "{{ importedfile.owner }}"
+    - "{{ importedfile.group }}"
+    - "{{ importedfile.mode }}"
+    - "{{ importedfile.force | default(True) }}"
+    - "{{ importedfile.template.vars | default({}) }}"
 
 #- name: Import file
 #  template:
-#    src: "{{ import.source }}"
-#    dest: "{{ import.destination }}"
-#    owner: "{{ import.owner }}"
-#    group: "{{ import.group }}"
-#    mode: "{{ import.mode }}"
-#    force: "{{ import.force | default(True) }}"
+#    src: "{{ importedfile.source }}"
+#    dest: "{{ importedfile.destination }}"
+#    owner: "{{ importedfile.owner }}"
+#    group: "{{ importedfile.group }}"
+#    mode: "{{ importedfile.mode }}"
+#    force: "{{ importedfile.force | default(True) }}"
 #    newline_sequence: '\r\n'
-#    vars: "{{ import.template.vars | default({}) }}"
+#    vars: "{{ importedfile.template.vars | default({}) }}"
