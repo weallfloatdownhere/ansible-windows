@@ -9,7 +9,7 @@
     - "{{ executable.become_pass | default('password') }}"
 
 #- name: Installing provided executable
-#  ansible.windows.win_package:
+#  win_package:
 #    path: "{{ executable.path }}"
 #    product_id: "{{ executable.product_id | default('Installation name') }}"
 #    arguments: "{{ executable.arguments | default([]) }}"

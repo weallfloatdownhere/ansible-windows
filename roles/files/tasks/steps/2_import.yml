@@ -1,0 +1,19 @@
+- name: Import file
+  debug:
+    msg:
+    - "{{ import.source }}"
+    - "{{ import.destination }}"
+    - "{{ import.owner }}"
+    - "{{ import.group }}"
+    - "{{ import.mode }}"
+    - "{{ import.force | default(True) }}"
+
+#- name: Import file
+#  template:
+#    src: "{{ import.source }}"
+#    dest: "{{ import.destination }}"
+#    owner: "{{ import.owner }}"
+#    group: "{{ import.group }}"
+#    mode: "{{ import.mode }}"
+#    force: "{{ import.force | default(True) }}"
+#    newline_sequence: '\r\n'

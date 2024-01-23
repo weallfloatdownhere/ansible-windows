@@ -4,6 +4,6 @@
     - "{{ clean_path }}"
 
 #- name: "Cleaning specified file."
-#  ansible.windows.win_file:
+#  win_file:
 #    path: "{{ clean_path }}"
 #    state: absent

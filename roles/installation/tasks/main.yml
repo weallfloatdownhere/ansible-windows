@@ -40,3 +40,10 @@
   when: "{{ executable.condition | default(True) }}"
   loop: "{{ step_values.executables }}"
   loop_control: { loop_var: executable }
+
+# REBOOT THE SYSTEM IF reboot_after is `True`
+- name: Reboot a slow machine that might have lots of updates to apply
+  win_reboot:
+    reboot_timeout: 3600
+    post_reboot_delay: 120
+  when: "{{ step_values.reboot_after | default(False) }}"

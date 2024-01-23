@@ -2,31 +2,30 @@ phases:
   0_checks:
     checks:
       stats:
-        - path: /tmp/exists.txt
-          register: exists_reg
-          condition: 1==1
-        - path: /tmp/absent.txt
-          register: absent_reg
+        - { path: /tmp/exists.txt, register: exists_reg,condition: 1==1 }
+        - { path: /tmp/absent.txt, register: absent_reg }
   1_config:
     files:
       clean:
-        - path: /tmp/clean-me.txt
-          condition: 1<2
+        - { path: /tmp/clean-me.txt, condition: 1<2 }
       downloads:
         - url: https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Test-Logo.svg/783px-Test-Logo.svg.png
           destination: /tmp/test-logo.png
-          archive:
-            archive: True
-            destination: /tmp/test
+          archive: { archive: True, destination: /tmp/test }
+          force: True
+          condition: 1<2
+      imports:
+        - source: templates/configuration.ini.j2
+          destination: "/tmp/configtest.ini"
+          owner: bin
+          group: wheel
+          mode: '0644'
           force: True
           condition: 1<2
   2_setup:
     system:
       services:
-        - name: spooler
-          start_mode: auto
-          state: started
-          condition: 1<2
+        - { name: spooler,start_mode: auto,state: started,condition: 1<2 }
       regedits:
         - name: Language Hotkey    
           path: HKCU:\Keyboard Layout\Toggle
@@ -37,11 +36,9 @@ phases:
           condition: 1<2
   3_install:
     installation:
+      reboot_after: True
       chocolatey:
-        - name: packagename
-          state: present
-          version: latest
-          condition: 1<2
+        - { name: packagename,state: present,version: latest,condition: 1<2 }
       features:
         - name: Net-Framework-Features
           source: C:\Temp\iso\sources\sxs

@@ -5,6 +5,6 @@
     - "{{ register_name }}"
 
 #- name: Getting files/directories status
-#  ansible.windows.win_stat:
+#  win_stat:
 #    path: "{{ file_path }}"
 #  register: "{{ register_name }}"

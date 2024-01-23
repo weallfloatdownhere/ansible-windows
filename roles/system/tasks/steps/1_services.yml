@@ -5,7 +5,7 @@
     - "{{ winservice.state | default('started') }}"
 
 #- name: Set service startup mode to auto and ensure it is started
-#  ansible.windows.win_service:
+#  win_service:
 #    name: "{{ winservice.name }}"
 #    start_mode: "{{ winservice.start_mode | default('auto') }}"
 #    state: "{{ winservice.state | default('started') }}"
