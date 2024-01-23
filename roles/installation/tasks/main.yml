@@ -24,3 +24,19 @@
   when: "{{ feature.condition | default(True) }}"
   loop: "{{ step_values.features }}"
   loop_control: { loop_var: feature }
+
+# EXECUTABLES
+- name: "Starting the step EXECUTABLES."
+  include_tasks: steps/2_executables.yml
+  vars:
+    executable:
+      path: "{{ executable.path }}"
+      product_id: "{{ executable.product_id }}"
+      arguments: "{{ executable.product_id | default([]) }}"
+      become: "{{ executable.become | default(False) }}"
+      become_method: "{{ executable.become | default('runas') }}"
+      become_user: "{{ executable.become_user }}"
+      become_pass: "{{ executable.become_pass }}"
+  when: "{{ executable.condition | default(True) }}"
+  loop: "{{ step_values.executables }}"
+  loop_control: { loop_var: executable }

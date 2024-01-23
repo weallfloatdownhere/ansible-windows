@@ -1,5 +1,8 @@
 - debug:
-    msg: "{{ package.name }} {{ package.version }} {{ package.state }}"
+    msg:
+    - "{{ package.name }}" 
+    - "{{ package.version }}" 
+    - "{{ package.state }}"
 
 #- name: Upgrade installed packages
 #  win_chocolatey:

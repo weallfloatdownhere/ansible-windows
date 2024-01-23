@@ -1,0 +1,20 @@
+- debug:
+    msg:
+    - "{{ executable.path }}"
+    - "{{ executable.arguments | default([]) }}"
+    - "{{ executable.product_id | default('Installation name') }}"
+    - "{{ executable.become | default(False) }}"
+    - "{{ executable.become | default('runas') }}"
+    - "{{ executable.become_user | default('user') }}"
+    - "{{ executable.become_pass | default('password') }}"
+
+#- name: Installing provided executable
+#  ansible.windows.win_package:
+#    path: "{{ executable.path }}"
+#    product_id: "{{ executable.product_id | default('Installation name') }}"
+#    arguments: "{{ executable.arguments | default([]) }}"
+#  become: "{{ executable.become | default(False) }}"
+#  vars:
+#    ansible_become_method: "{{ executable.become | default('runas') }}"
+#    ansible_become_user: "{{ executable.become_user | default('user') }}"
+#    ansible_become_pass: "{{ executable.become_pass | default('password') }}"
