@@ -1,5 +1,11 @@
 - debug:
-    msg: "{{ winreg.name }} {{ winreg.path }} {{ winreg.data }} {{ winreg.type | default('dword') }} {{ winreg.state | default('present') }} {{ winreg.delete_key | default(False) }}"
+    msg: 
+    - "{{ winreg.name }}" 
+    - "{{ winreg.path }}" 
+    - "{{ winreg.data }}" 
+    - "{{ winreg.type | default('dword') }}" 
+    - "{{ winreg.state | default('present') }}" 
+    - "{{ winreg.delete_key | default(False) }}"
 
 #- name: Disable language hotkey for current users (adds new)
 #  win_regedit:
