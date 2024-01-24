@@ -2,15 +2,7 @@
 - name: "Starting the step WINDOWS FIREWALL."
   include_tasks: steps/0_firewall.yml
   vars: 
-    rule:
-      name: "{{ firewall_rule.name }}"
-      localport: "{{ firewall_rule.localport }}"
-      action: "{{ firewall_rule.action }}"
-      direction: "{{ firewall_rule.direction }}"
-      protocol: "{{ firewall_rule.protocol }}"
-      program: "{{ firewall_rule.program }}"
-      state: "{{ firewall_rule.state }}"
-      enabled: "{{ firewall_rule.enabled }}"
+    rule: "{{ firewall_rule | default({}) }}"
   when: "{{ firewall_rule.condition | default(True) }}"
   with_items: "{{ step_values.firewall.rules }}"
   loop_control: { loop_var: firewall_rule }

@@ -2,8 +2,7 @@
 - name: "Starting the step STATS."
   include_tasks: steps/0_stats.yml
   vars:
-    file_path: "{{ files_stats.path }}"
-    register_name: "{{ files_stats.register }}"
+    statusfile: "{{ files_stats | default({}) }}"
   when: "{{ files_stats.condition | default(True) }}"
   with_items: "{{ step_values.stats }}"
   loop_control: { loop_var: files_stats }

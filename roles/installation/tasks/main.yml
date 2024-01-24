@@ -2,10 +2,7 @@
 - name: "Starting the step CHOCOLATEY."
   include_tasks: steps/0_chocolatey.yml
   vars: 
-    package:
-        name: "{{ chocolatey_package.name }}"
-        state: "{{ chocolatey_package.state | default('present') }}"
-        version: "{{ chocolatey_package.version | default('latest') }}"
+    package: "{{ chocolatey_package | default({}) }}"
   when: "{{ chocolatey_package.condition | default(True) }}"
   with_items: "{{ step_values.chocolatey }}"
   loop_control: { loop_var: chocolatey_package }
@@ -14,32 +11,19 @@
 - name: "Starting the step FEATURES."
   include_tasks: steps/1_features.yml
   vars: 
-    feature:
-        name: "{{ feature.name }}"
-        source: "{{ feature.source }}"
-        state: "{{ feature.state }}"
-        reboot_if_needed: "{{ feature.reboot_if_needed }}"
-        include_sub_features: "{{ feature.include_sub_features }}"
-        include_management_tools: "{{ feature.include_management_tools }}"
+    feature: "{{ l_feature | default({}) }}"
   when: "{{ feature.condition | default(True) }}"
   with_items: "{{ step_values.features }}"
-  loop_control: { loop_var: feature }
+  loop_control: { loop_var: l_feature }
 
 # EXECUTABLES
 - name: "Starting the step EXECUTABLES."
   include_tasks: steps/2_executables.yml
   vars:
-    executable:
-      path: "{{ executable.path }}"
-      product_id: "{{ executable.product_id }}"
-      arguments: "{{ executable.product_id | default([]) }}"
-      become: "{{ executable.become | default(False) }}"
-      become_method: "{{ executable.become | default('runas') }}"
-      become_user: "{{ executable.become_user }}"
-      become_pass: "{{ executable.become_pass }}"
+    executable: "{{ l_executable | default({}) }}"
   when: "{{ executable.condition | default(True) }}"
   with_items: "{{ step_values.executables }}"
-  loop_control: { loop_var: executable }
+  loop_control: { loop_var: l_executable }
 
 # REBOOT THE SYSTEM IF reboot_after is `True`
 - name: Reboot a slow machine that might have lots of updates to apply

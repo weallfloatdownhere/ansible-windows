@@ -2,7 +2,7 @@
 - name: "Starting the step CLEAN."
   include_tasks: steps/0_clean.yml
   vars: 
-    clean_path: "{{ cleanme.path }}"
+    cleanme: "{{ cleanme | default({}) }}"
   when: "{{ cleanme.condition | default(True) }}"
   with_items: "{{ step_values.clean }}"
   loop_control: { loop_var: cleanme }
@@ -11,13 +11,7 @@
 - name: "Starting the step DOWNLOAD."
   include_tasks: steps/1_download.yml
   vars:
-    download:
-      url: "{{ download.url }}"
-      destination: "{{ download.destination }}"
-      force: "{{ download.force }}"
-      archive:
-        archive: "{{ download.archive.archive }}"
-        destination: "{{ download.archive.destination }}"
+    download: "{{ download | default({}) }}"
   when: "{{ download.condition | default(True) }}"
   with_items: "{{ step_values.downloads }}"
   loop_control: { loop_var: download }
@@ -26,15 +20,7 @@
 - name: "Starting the step IMPORTS."
   include_tasks: steps/2_import.yml
   vars:
-    importedfile:
-      source: "{{ importedfile.source }}"
-      destination: "{{ importedfile.destination }}"
-      owner: "{{ importedfile.owner }}"
-      group: "{{ importedfile.group }}"
-      mode: "{{ importedfile.mode }}"
-      force: "{{ importedfile.force | default(True) }}"
-      template:
-        vars: "{{ importedfile.template.vars | default({}) }}"
+    importedfile: "{{ importedfile | default({}) }}"
   when: "{{ importedfile.condition | default(True) }}"
   with_items: "{{ step_values.imports }}"
   loop_control: { loop_var: importedfile }
@@ -43,9 +29,7 @@
 - name: "Starting the step SHORTCURTS."
   include_tasks: steps/3_shortcut.yml
   vars:
-    shortcutlnk:
-      source: "{{ shortcuts.source }}"
-      destination: "{{ shortcuts.destination }}"
+    shortcutlnk: "{{ shortcuts | default({}) }}"
   when: "{{ shortcuts.condition | default(True) }}"
   with_items: "{{ step_values.imports }}"
   loop_control: { loop_var: shortcuts }
