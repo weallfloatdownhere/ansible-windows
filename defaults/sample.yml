@@ -1,0 +1,37 @@
+jobs:
+  - chocolatey:
+      name: test
+      pinned: True
+      state: present
+      timeout: 2700
+      version: "1.0.0"
+
+  - download:
+      url: 'http://urldownload1.com'
+      destination: "destination1"
+      force: False
+
+  - download:
+      url: 'http://urldownload2.com'
+      destination: "destination2"
+      force: False
+      archive:
+        destination: "archive_destination2"
+
+  - regedits:
+      name: Language Hotkey
+      path: HKCU:\Keyboard Layout\Toggle
+      data: 3
+      type: dword
+      state: present
+
+  - regedits:
+      name: Language Hotkey
+      path: HKCU:\Keyboard Layout\Toggle
+      state: absent
+      delete_key: yes
+
+  - services:
+      name: 'spooler'
+      start_mode: 'auto'
+      state: 'started'

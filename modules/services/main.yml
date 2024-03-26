@@ -1,0 +1,20 @@
+- name: Set default values
+  ansible.builtin.set_fact:
+    winservice_name: "{{ job_values.name | default('undefined') }}" 
+    winservice_start_mode: "{{ job_values.start_mode | default('auto') }}" 
+    winservice_state: "{{ job_values.state | default('started') }}"
+
+- debug:
+    msg: 
+    - "{{ winservice_name }}" 
+    - "{{ winservice_start_mode }}" 
+    - "{{ winservice_state }}"
+
+- name: Windows
+  block:
+    - name: Set service startup mode to auto and ensure it is started
+      win_service:
+        name: "{{ winservice_name }}"
+        start_mode: "{{ winservice_start_mode }}"
+        state: "{{ winservice_state }}"
+  when: '"windows" in ansible_system|lower'

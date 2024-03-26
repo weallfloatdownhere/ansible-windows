@@ -1,6 +1,7 @@
 # Loops through the specified instructions from the var file.
+
 - name: Starting the phases.
-  include_tasks: core.yml
-  vars: { phase: "{{ current_phase.value }}" }
-  loop: "{{ instructions.phases | dict2items }}"
-  loop_control: { loop_var: current_phase }
+  include_tasks: "modules/{{ current_job.key }}/main.yml"
+  vars: { job_values: "{{ current_job.value | default({}) }}" }
+  with_dict: "{{ jobs.jobs }}"
+  loop_control: { loop_var: current_job }

@@ -1,0 +1,26 @@
+- name: Set default values
+  ansible.builtin.set_fact:
+    package_name: "{{ job_values.name | default(None) }}" 
+    package_state: "{{ job_values.state | default('present') }}" 
+    package_version: "{{ job_values.version | default(None) }}"
+    package_timeout: "{{ job_values.timeout | default(2700) }}"
+    package_pinned: "{{ job_values.pinned | default(False) }}"
+
+- debug:
+    msg: 
+    - "{{ package_name }}" 
+    - "{{ package_version }}" 
+    - "{{ package_state }}"
+    - "{{ package_timeout }}"
+    - "{{ package_pinned }}"
+
+- name: Windows
+  block:
+    - name: Install / Upgrade the Chocolatey package
+      win_chocolatey:
+        name: "{{ package_name }}"
+        state: "{{ package_state }}"
+        version: "{{ package_version }}"
+        timeout: "{{ package_timeout }}"
+        pinned: "{{ package_pinned }}"
+  when: '"windows" in ansible_system|lower'

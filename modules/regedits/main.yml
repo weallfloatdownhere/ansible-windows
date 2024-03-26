@@ -1,0 +1,29 @@
+- name: Set default values
+  ansible.builtin.set_fact:
+    winreg_name: "{{ job_values.name | default('undefined') }}" 
+    winreg_path: "{{ job_values.path | default('undefined') }}" 
+    winreg_data: "{{ job_values.data | default('undefined') }}" 
+    winreg_type: "{{ job_values.type | default('dword') }}" 
+    winreg_state: "{{ job_values.state | default('present') }}" 
+    winreg_delete_key: "{{ job_values.delete_key | default(False) }}"
+
+- debug:
+    msg: 
+    - "{{ winreg_name }}" 
+    - "{{ winreg_path }}" 
+    - "{{ winreg_data }}"
+    - "{{ winreg_type }}"
+    - "{{ winreg_state }}"
+    - "{{ winreg_delete_key }}"
+
+- name: Windows
+  block:
+    - name: Disable language hotkey for current users (adds new)
+      win_regedit:
+        name: "{{ winreg_name }}"
+        path: "{{ winreg_path }}"
+        data: "{{ winreg_data }}"
+        type: "{{ winreg_type }}"
+        state: "{{ winreg.state }}"
+        delete_key: "{{ winreg.delete_key }}"
+  when: '"windows" in ansible_system|lower'

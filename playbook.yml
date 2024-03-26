@@ -3,8 +3,8 @@
   tasks:
   - name: Include vars
     ansible.builtin.include_vars:
-      file: vars/sample.yml
-      name: instructions
+      file: defaults/sample.yml
+      name: jobs
 
   - name: Lauching Ansible playbook
     include_tasks: tasks/main.yml
