@@ -1,0 +1,57 @@
+# - name: Import file
+#   debug:
+#     msg:
+#     - "{{ importedfile.source }}"
+#     - "{{ importedfile.destination }}"
+#     - "{{ importedfile.owner }}"
+#     - "{{ importedfile.group }}"
+#     - "{{ importedfile.mode }}"
+#     - "{{ importedfile.force | default(True) }}"
+#     - "{{ importedfile.template.vars | default({}) }}"
+
+#- name: Import file
+#  template:
+#    src: "{{ importedfile.source }}"
+#    dest: "{{ importedfile.destination }}"
+#    owner: "{{ importedfile.owner }}"
+#    group: "{{ importedfile.group }}"
+#    mode: "{{ importedfile.mode }}"
+#    force: "{{ importedfile.force | default(True) }}"
+#    newline_sequence: '\r\n'
+#    vars: "{{ importedfile.template.vars | default({}) }}"
+
+- name: Set default values
+  ansible.builtin.set_fact:
+    template_file_source: "{{ job_values.source }}"
+    template_file_destination: "{{ job_values.destination }}"
+    template_file_owner: "{{ job_values.owner | default(None) }}"
+    template_file_group: "{{ job_values.group | default(None) }}"
+    template_file_mode: "{{ job_values.mode  | default(None) }}"
+    template_file_force: "{{ job_values.force | default(True) }}"
+    template_file_template_vars: "{{ job_values.template.vars | default({}) }}"
+    template_newline_sequence: "{{ job_values.newline_sequence | default('\r\n') }}"
+
+- debug:
+    msg: 
+    - "{{ template_file_source }}" 
+    - "{{ template_file_destination }}" 
+    - "{{ template_file_owner }}"
+    - "{{ template_file_group }}"
+    - "{{ template_file_mode }}"
+    - "{{ template_file_force }}"
+    - "{{ template_file_template_vars }}"
+    - "{{ template_newline_sequence }}"
+
+- name: Windows
+  block:
+    - name: Import template file
+      template:
+        src: "{{ template_file_source }}"
+        dest: "{{ template_file_destination }}"
+        owner: "{{ template_file_owner }}"
+        group: "{{ template_file_group }}"
+        mode:  "{{ template_file_mode }}"
+        force: "{{ template_file_force }}"
+        newline_sequence: "{{ template_newline_sequence }}"
+        vars: "{{ template_file_template_vars }}"
+  when: '"windows" in ansible_system|lower'

@@ -114,3 +114,13 @@ jobs:
             enabled: yes
             program: any
             condition: 1<2
+
+      - template:
+            source: templates/configuration.ini.j2
+            destination: "/tmp/configtest.ini"
+            owner: bin
+            group: wheel
+            mode: "0644"
+            force: True
+            template:
+              vars: { test: test, test1: test1, test2: test2 }

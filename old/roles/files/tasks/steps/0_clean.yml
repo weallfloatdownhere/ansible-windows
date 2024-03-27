@@ -1,8 +1,0 @@
-- debug:
-    msg: 
-    - "{{ cleanme.path }}"
-
-#- name: "Cleaning specified file."
-#  win_file:
-#    path: "{{ cleanme.path }}"
-#    state: absent
