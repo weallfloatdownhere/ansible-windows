@@ -1,0 +1,18 @@
+- name: Set default values
+  set_fact:
+    product_name: "{{ target_product | default(None) }}" 
+
+- debug:
+    msg: 
+    - "{{ product_name }}"
+
+- name: Include default vars
+  include_vars:
+    file: "products/{{ product_name }}/main.yml"
+    name: jobs
+
+- name: Starting the jobs.
+  include_tasks: "modules/{{ current_job.key }}/main.yml"
+  vars: { job_values: "{{ current_job.value | default({}) }}" }
+  with_dict: "{{ jobs.jobs }}"
+  loop_control: { loop_var: current_job }

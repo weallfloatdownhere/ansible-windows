@@ -1,7 +1,4 @@
-# Loops through the specified instructions from the var file.
-
-- name: Starting the phases.
-  include_tasks: "modules/{{ current_job.key }}/main.yml"
-  vars: { job_values: "{{ current_job.value | default({}) }}" }
-  with_dict: "{{ jobs.jobs }}"
-  loop_control: { loop_var: current_job }
+- name: Lauching Ansible playbook
+  include_tasks: ../modules/core/main.yml
+  vars:
+    target_product: "{{ product | default(None) }}"

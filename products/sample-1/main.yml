@@ -1,5 +1,6 @@
 jobs:
 - chocolatey:
+      job_id: test1
       # Name of the package(s) to be installed.
       name: test1
       # Whether to pin the Chocolatey package or not.
@@ -37,6 +38,7 @@ jobs:
        - "--package-parameters-sensitive"
 
 - chocolatey:
+      job_id: test2
       name: test2
       pinned: True
       state: present
@@ -44,11 +46,13 @@ jobs:
       version: "1.0.0"
 
 - download:
+      job_id: test3
       url: 'http://urldownload1.com'
       destination: "destination1"
       force: False
 
 - download:
+      job_id: test4
       url: 'http://urldownload2.com'
       destination: "destination2"
       force: False
@@ -56,6 +60,7 @@ jobs:
         destination: "archive_destination2"
 
 - regedits:
+      job_id: test5
       name: Language Hotkey
       path: HKCU:\Keyboard Layout\Toggle
       data: 3
@@ -63,24 +68,29 @@ jobs:
       state: present
 
 - regedits:
+      job_id: test6
       name: Language Hotkey
       path: HKCU:\Keyboard Layout\Toggle
       state: absent
       delete_key: yes
 
 - services:
+      job_id: test7
       name: 'spooler'
       start_mode: 'auto'
       state: 'started'
 
 - shortcut:
+      job_id: test8
       source: /tmp/test.png
       destination: /Desktop/test.png
 
 - reboot:
+      job_id: test9
       timeout: 3600
 
 - win_features:
+      job_id: test10
       name: Net-Framework-Features
       source: C:\Temp\iso\sources\sxs
       state: present
@@ -89,6 +99,7 @@ jobs:
       include_management_tools: True
 
 - executables:
+      job_id: test11
       path: 'C:\temp\SQLEXPR_x64_ENU\SETUP.EXE'
       product_id: 'Microsoft SQL Server SQL2019'
       arguments:
@@ -102,13 +113,16 @@ jobs:
       become_pass: "password"
 
 - executables:
+      job_id: test12
       path: 'C:\temp\SAMPLE_x64_ENU\SETUP.EXE'
       product_id: 'Microsoft Demo Test'
 
 - delete_file:
+      job_id: test13
       path: 'C:\temp\test.txt'
 
 - firewall:
+      job_id: test14
       name: SMTP
       localport: 25
       action: allow
@@ -120,6 +134,7 @@ jobs:
       condition: 1<2
 
 - template:
+      job_id: test15
       source: templates/configuration.ini.j2
       destination: "/tmp/configtest.ini"
       owner: bin

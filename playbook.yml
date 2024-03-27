@@ -1,10 +1,6 @@
 - name: Common windows tasks executer
   hosts: localhost
   tasks:
-  - name: Include vars
-    include_vars:
-      file: defaults/sample.yml
-      name: jobs
-
-  - name: Lauching Ansible playbook
-    include_tasks: tasks/main.yml
+    - name: Install Sample 1
+      include_tasks: tasks/main.yml
+      vars: { product: 'sample-1' }
