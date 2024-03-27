@@ -1,0 +1,33 @@
+- name: Set default values
+  ansible.builtin.set_fact:
+    executable_path: "{{ job_values.path | default(None) }}" 
+    executable_arguments: "{{ job_values.arguments | default([]) }}" 
+    executable_product_id: "{{ job_values.product_id | default('Installation name') }}"
+    executable_become: "{{ job_values.become | default(False) }}"
+    executable_become_method: "{{ job_values.become_method | default('runas') }}"
+    executable_become_user: "{{ job_values.become_user | default(None) }}"
+    executable_become_pass: "{{ job_values.become_pass | default(None) }}"
+
+- debug:
+    msg: 
+    - "{{ executable_path }}" 
+    - "{{ executable_arguments }}" 
+    - "{{ executable_product_id }}"
+    - "{{ executable_become }}"
+    - "{{ executable_become_method }}"
+    - "{{ executable_become_user }}"
+    - "{{ executable_become_pass }}"
+
+- name: Windows
+  block:
+    - name: Installing provided executable
+      win_package:
+        path: "{{ executable_path }}"
+        product_id: "{{ executable_product_id }}"
+        arguments: "{{ executable_arguments }}"
+      become: "{{ executable_become }}"
+      vars:
+        ansible_become_method: "{{ executable_become_method }}"
+        ansible_become_user: "{{ executable_become_user }}"
+        ansible_become_pass: "{{ executable_become_pass }}"
+  when: '"windows" in ansible_system|lower'
