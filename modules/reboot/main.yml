@@ -1,0 +1,14 @@
+- name: Set default values
+  ansible.builtin.set_fact:
+    reboot_timeout_time: "{{ job_values.timeout | default(3600) }}" 
+
+- debug:
+    msg: 
+    - "{{ reboot_timeout_time }}"
+
+- name: Windows
+  block:
+    - name: Reboot the machine with all defaults
+      ansible.windows.win_reboot:
+        reboot_timeout: "{{ reboot_timeout_time }}"
+  when: '"windows" in ansible_system|lower'

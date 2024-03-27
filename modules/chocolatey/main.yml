@@ -5,6 +5,8 @@
     package_version: "{{ job_values.version | default(None) }}"
     package_timeout: "{{ job_values.timeout | default(2700) }}"
     package_pinned: "{{ job_values.pinned | default(False) }}"
+    package_choco_args: "{{ job_values.choco_args | default([]) }}"
+    package_install_args: "{{ job_values.install_args | default('') }}"
 
 - debug:
     msg: 
@@ -13,6 +15,8 @@
     - "{{ package_state }}"
     - "{{ package_timeout }}"
     - "{{ package_pinned }}"
+    - "{{ package_choco_args }}"
+    - "{{ package_install_args }}"
 
 - name: Windows
   block:
@@ -23,4 +27,6 @@
         version: "{{ package_version }}"
         timeout: "{{ package_timeout }}"
         pinned: "{{ package_pinned }}"
+        choco_args: "{{ package_choco_args }}"
+        install_args: "{{ package_install_args }}"
   when: '"windows" in ansible_system|lower'

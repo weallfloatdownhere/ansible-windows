@@ -1,0 +1,33 @@
+- name: Set default values
+  ansible.builtin.set_fact:
+    feature_name: "{{ job_values.name | default(None) }}" 
+    feature_state: "{{ job_values.state | default('present') }}" 
+    feature_source: "{{ job_values.source | default(None) }}"
+    feature_include_sub_features: "{{ job_values.include_sub_features | default(False) }}"
+    feature_include_management_tools: "{{ job_values.include_management_tools | default(False) }}"
+    feature_reboot_if_needed: "{{ job_values.reboot_if_needed | default(False) }}"
+
+- debug:
+    msg: 
+    - "{{ feature_name }}" 
+    - "{{ feature_state }}" 
+    - "{{ feature_source }}"
+    - "{{ feature_include_sub_features }}"
+    - "{{ feature_include_management_tools }}"
+    - "{{ feature_reboot_if_needed }}"
+
+- name: Windows
+  block:
+    - name: Install feature
+      win_feature:
+        name: "{{ feature_name }}"
+        state: "{{ feature_state|default('present') }}"
+        source: "{{ feature_source }}"
+        include_sub_features: "{{ feature_include_sub_features }}"
+        include_management_tools: "{{ feature_include_management_tools }}"
+      register: win_feature
+
+    - name: Reboot if installing the feature requires it
+      win_reboot:
+      when: win_feature.reboot_required and feature_reboot_if_needed
+  when: '"windows" in ansible_system|lower'
