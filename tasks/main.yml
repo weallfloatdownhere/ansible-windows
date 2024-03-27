@@ -1,4 +1,18 @@
-- name: Lauching Ansible playbook
-  include_tasks: modules/core/main.yml
-  vars:
-    target_product: "{{ product | default(None) }}"
+- name: Set default values
+  set_fact:
+    product_name: "{{ product | default(None) }}" 
+
+- debug:
+    msg: 
+    - "{{ product_name }}"
+
+- name: Include default vars
+  include_vars:
+    file: "products/{{ product_name }}/main.yml"
+    name: jobs
+
+- name: Starting the jobs.
+  include_tasks: "tasks/modules/{{ current_job.key }}/main.yml"
+  vars: { job_values: "{{ current_job.value | default({}) }}" }
+  with_dict: "{{ jobs.jobs }}"
+  loop_control: { loop_var: current_job }
