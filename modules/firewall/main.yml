@@ -1,5 +1,5 @@
 - name: Set default values
-  ansible.builtin.set_fact:
+  set_fact:
     firewall_rule_name: "{{ job_values.name }}" 
     firewall_rule_localport: "{{ job_values.localport | default('any') }}"
     firewall_rule_action: "{{ job_values.action       | default('allow') }}" 
@@ -23,7 +23,7 @@
 - name: Windows
   block:
     - name: Adding firewall rule
-      community.windows.win_firewall_rule:
+      win_firewall_rule:
         name: "{{ firewall_rule_name }}"
         localport: "{{ firewall_rule_localport }}"
         action: "{{ firewall_rule_action }}"

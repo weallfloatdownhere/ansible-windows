@@ -21,7 +21,7 @@
 #    vars: "{{ importedfile.template.vars | default({}) }}"
 
 - name: Set default values
-  ansible.builtin.set_fact:
+  set_fact:
     template_file_source: "{{ job_values.source }}"
     template_file_destination: "{{ job_values.destination }}"
     template_file_owner: "{{ job_values.owner | default(None) }}"

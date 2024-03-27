@@ -1,5 +1,5 @@
 - name: Set default values
-  ansible.builtin.set_fact:
+  set_fact:
     feature_name: "{{ job_values.name | default(None) }}" 
     feature_state: "{{ job_values.state | default('present') }}" 
     feature_source: "{{ job_values.source | default(None) }}"

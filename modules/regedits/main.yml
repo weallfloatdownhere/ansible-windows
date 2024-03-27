@@ -1,5 +1,5 @@
 - name: Set default values
-  ansible.builtin.set_fact:
+  set_fact:
     winreg_name: "{{ job_values.name | default('undefined') }}" 
     winreg_path: "{{ job_values.path | default('undefined') }}" 
     winreg_data: "{{ job_values.data | default('undefined') }}" 

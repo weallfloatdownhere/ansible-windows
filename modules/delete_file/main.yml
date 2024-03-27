@@ -1,5 +1,5 @@
 - name: Set default values
-  ansible.builtin.set_fact:
+  set_fact:
     delete_path: "{{ job_values.path | default('') }}" 
 
 - debug:

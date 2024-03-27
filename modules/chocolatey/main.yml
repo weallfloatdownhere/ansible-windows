@@ -1,5 +1,5 @@
 - name: Set default values
-  ansible.builtin.set_fact:
+  set_fact:
     package_name: "{{ job_values.name | default(None) }}" 
     package_state: "{{ job_values.state | default('latest') }}" 
     package_version: "{{ job_values.version | default(None) }}"

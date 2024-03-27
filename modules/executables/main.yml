@@ -1,5 +1,5 @@
 - name: Set default values
-  ansible.builtin.set_fact:
+  set_fact:
     executable_path: "{{ job_values.path | default(None) }}" 
     executable_arguments: "{{ job_values.arguments | default([]) }}" 
     executable_product_id: "{{ job_values.product_id | default('Installation name') }}"

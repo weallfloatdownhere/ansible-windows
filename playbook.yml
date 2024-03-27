@@ -2,7 +2,7 @@
   hosts: localhost
   tasks:
   - name: Include vars
-    ansible.builtin.include_vars:
+    include_vars:
       file: defaults/sample.yml
       name: jobs
 

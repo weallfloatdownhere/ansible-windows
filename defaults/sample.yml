@@ -1,126 +1,126 @@
 jobs:
-      - chocolatey:
-            # Name of the package(s) to be installed.
-            name: test1
-            # Whether to pin the Chocolatey package or not.
-            # If omitted then no checks on package pins are done.
-            # Will pin/unpin the specific version if version is set.
-            # Will pin the latest version of a package if true, version is not set and and no pin already exists.
-            # Will unpin all versions of a package if no and version is not set.
-            pinned: False
-            # State of the package on the system.
-            # When absent, will ensure the package is not installed.
-            # When present, will ensure the package is installed.
-            # When downgrade, will allow Chocolatey to downgrade a package if version is older than the installed version.
-            # When latest or upgrade, will ensure the package is installed to the latest available version.
-            # When reinstalled, will uninstall and reinstall the package.
-            # Choices:
-            #   - "absent"
-            #   - "downgrade"
-            #   - "upgrade"
-            #   - "latest"
-            #   - "present" ← (default)
-            #   - "reinstalled"
-            state: latest
-            # Parameters to pass to the package’s chocolateyInstall script.
-            # These are parameters specific to the Chocolatey package and are generally documented by the package itself.
-            # For parameters that should be passed directly to the underlying installer (for example, MSI installer properties and arguments), use install_args instead.
-            package_params: ""
-            # These are arguments that are passed directly to the installer run by the Chocolatey package, 
-            # for example MSI properties or command-line arguments for the specific native installer used by the package.
-            install_args: "/norestart /v /s"
-            # These may be any additional parameters to pass through directly to Chocolatey, 
-            # in addition to the arguments already specified via other parameters.
-            # Passing licensed options may result in them being ignored or 
-            # causing errors if the targeted node is unlicensed or missing the chocolatey.extension package.
-            choco_args:
-             - "--package-parameters-sensitive"
+- chocolatey:
+      # Name of the package(s) to be installed.
+      name: test1
+      # Whether to pin the Chocolatey package or not.
+      # If omitted then no checks on package pins are done.
+      # Will pin/unpin the specific version if version is set.
+      # Will pin the latest version of a package if true, version is not set and and no pin already exists.
+      # Will unpin all versions of a package if no and version is not set.
+      pinned: False
+      # State of the package on the system.
+      # When absent, will ensure the package is not installed.
+      # When present, will ensure the package is installed.
+      # When downgrade, will allow Chocolatey to downgrade a package if version is older than the installed version.
+      # When latest or upgrade, will ensure the package is installed to the latest available version.
+      # When reinstalled, will uninstall and reinstall the package.
+      # Choices:
+      #   - "absent"
+      #   - "downgrade"
+      #   - "upgrade"
+      #   - "latest"
+      #   - "present" ← (default)
+      #   - "reinstalled"
+      state: latest
+      # Parameters to pass to the package’s chocolateyInstall script.
+      # These are parameters specific to the Chocolatey package and are generally documented by the package itself.
+      # For parameters that should be passed directly to the underlying installer (for example, MSI installer properties and arguments), use install_args instead.
+      package_params: ""
+      # These are arguments that are passed directly to the installer run by the Chocolatey package, 
+      # for example MSI properties or command-line arguments for the specific native installer used by the package.
+      install_args: "/norestart /v /s"
+      # These may be any additional parameters to pass through directly to Chocolatey, 
+      # in addition to the arguments already specified via other parameters.
+      # Passing licensed options may result in them being ignored or 
+      # causing errors if the targeted node is unlicensed or missing the chocolatey.extension package.
+      choco_args:
+       - "--package-parameters-sensitive"
 
-      - chocolatey:
-            name: test2
-            pinned: True
-            state: present
-            timeout: 2700
-            version: "1.0.0"
+- chocolatey:
+      name: test2
+      pinned: True
+      state: present
+      timeout: 2700
+      version: "1.0.0"
 
-      - download:
-            url: 'http://urldownload1.com'
-            destination: "destination1"
-            force: False
+- download:
+      url: 'http://urldownload1.com'
+      destination: "destination1"
+      force: False
 
-      - download:
-            url: 'http://urldownload2.com'
-            destination: "destination2"
-            force: False
-            archive:
-              destination: "archive_destination2"
+- download:
+      url: 'http://urldownload2.com'
+      destination: "destination2"
+      force: False
+      archive:
+        destination: "archive_destination2"
 
-      - regedits:
-            name: Language Hotkey
-            path: HKCU:\Keyboard Layout\Toggle
-            data: 3
-            type: dword
-            state: present
+- regedits:
+      name: Language Hotkey
+      path: HKCU:\Keyboard Layout\Toggle
+      data: 3
+      type: dword
+      state: present
 
-      - regedits:
-            name: Language Hotkey
-            path: HKCU:\Keyboard Layout\Toggle
-            state: absent
-            delete_key: yes
+- regedits:
+      name: Language Hotkey
+      path: HKCU:\Keyboard Layout\Toggle
+      state: absent
+      delete_key: yes
 
-      - services:
-            name: 'spooler'
-            start_mode: 'auto'
-            state: 'started'
+- services:
+      name: 'spooler'
+      start_mode: 'auto'
+      state: 'started'
 
-      - reboot:
-            timeout: 3600
+- reboot:
+      timeout: 3600
 
-      - win_features:
-            name: Net-Framework-Features
-            source: C:\Temp\iso\sources\sxs
-            state: present
-            reboot_if_needed: False
-            include_sub_features: False
-            include_management_tools: True
+- win_features:
+      name: Net-Framework-Features
+      source: C:\Temp\iso\sources\sxs
+      state: present
+      reboot_if_needed: False
+      include_sub_features: False
+      include_management_tools: True
 
-      - executables:
-            path: 'C:\temp\SQLEXPR_x64_ENU\SETUP.EXE'
-            product_id: 'Microsoft SQL Server SQL2019'
-            arguments:
-              [
-                SAPWD=VeryHardPassword,
-                /ConfigurationFile=C:\temp\configuration.ini,
-              ]
-            become: True
-            become_method: runas
-            become_user: "user"
-            become_pass: "password"
+- executables:
+      path: 'C:\temp\SQLEXPR_x64_ENU\SETUP.EXE'
+      product_id: 'Microsoft SQL Server SQL2019'
+      arguments:
+        [
+          SAPWD=VeryHardPassword,
+          /ConfigurationFile=C:\temp\configuration.ini,
+        ]
+      become: True
+      become_method: runas
+      become_user: "user"
+      become_pass: "password"
 
-      - executables:
-            path: 'C:\temp\SAMPLE_x64_ENU\SETUP.EXE'
-            product_id: 'Microsoft Demo Test'
+- executables:
+      path: 'C:\temp\SAMPLE_x64_ENU\SETUP.EXE'
+      product_id: 'Microsoft Demo Test'
 
-      - delete_file:
-            path: 'C:\temp\test.txt'
+- delete_file:
+      path: 'C:\temp\test.txt'
 
-      - firewall:
-            name: SMTP
-            localport: 25
-            action: allow
-            direction: in
-            protocol: tcp
-            state: present
-            enabled: yes
-            program: any
-            condition: 1<2
+- firewall:
+      name: SMTP
+      localport: 25
+      action: allow
+      direction: in
+      protocol: tcp
+      state: present
+      enabled: yes
+      program: any
+      condition: 1<2
 
-      - template:
-            source: templates/configuration.ini.j2
-            destination: "/tmp/configtest.ini"
-            owner: bin
-            group: wheel
-            mode: "0644"
-            force: True
-            template:
-              vars: { test: test, test1: test1, test2: test2 }
+- template:
+      source: templates/configuration.ini.j2
+      destination: "/tmp/configtest.ini"
+      owner: bin
+      group: wheel
+      mode: "0644"
+      force: True
+      template:
+        vars: { test: test, test1: test1, test2: test2 }

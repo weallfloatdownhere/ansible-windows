@@ -1,5 +1,5 @@
 - name: Set default values
-  ansible.builtin.set_fact:
+  set_fact:
     download_url: "{{ job_values.url | default('undefined') }}" 
     download_destination: "{{ job_values.destination | default(playbook_dir) }}" 
     download_force: "{{ job_values.force | default(False) }}" 

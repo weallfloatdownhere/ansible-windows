@@ -1,5 +1,5 @@
 - name: Set default values
-  ansible.builtin.set_fact:
+  set_fact:
     winservice_name: "{{ job_values.name | default('undefined') }}" 
     winservice_start_mode: "{{ job_values.start_mode | default('auto') }}" 
     winservice_state: "{{ job_values.state | default('started') }}"
