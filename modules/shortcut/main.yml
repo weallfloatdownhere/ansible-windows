@@ -1,0 +1,23 @@
+- name: Set default values
+  set_fact:
+    shortcut_source: "{{ job_values.source | default(None) }}"
+    shortcut_destination: "{{ job_values.destination | default(None) }}"
+
+- debug:
+    msg: 
+    - "{{ shortcut_source }}" 
+    - "{{ shortcut_destination }}" 
+
+- name: Windows
+  block:
+    - name: Getting files/directories status
+      win_stat:
+        path: "{{ shortcut_source }}"
+      register: reg_shortcut
+
+    - name: Create an application shortcut
+      win_shortcut:
+        src: "{{ shortcut.source }}"
+        dest: "{{ shortcut.destination }}"
+      when: reg_shortcut.stat.exists
+  when: '"windows" in ansible_system|lower'

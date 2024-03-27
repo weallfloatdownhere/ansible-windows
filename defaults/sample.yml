@@ -73,6 +73,10 @@ jobs:
       start_mode: 'auto'
       state: 'started'
 
+- shortcut:
+      source: /tmp/test.png
+      destination: /Desktop/test.png
+
 - reboot:
       timeout: 3600
 

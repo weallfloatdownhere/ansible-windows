@@ -1,6 +1,0 @@
-# Loops through the specified instructions from the var file.
-- name: Starting the phases.
-  include_tasks: core.yml
-  vars: { phase: "{{ current_phase.value }}" }
-  loop: "{{ instructions.phases | dict2items }}"
-  loop_control: { loop_var: current_phase }
