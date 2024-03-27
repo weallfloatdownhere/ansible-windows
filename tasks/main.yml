@@ -1,4 +1,4 @@
 - name: Lauching Ansible playbook
-  include_tasks: ../modules/core/main.yml
+  include_tasks: modules/core/main.yml
   vars:
     target_product: "{{ product | default(None) }}"

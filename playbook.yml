@@ -3,4 +3,6 @@
   tasks:
     - name: Install Demo
       include_tasks: tasks/main.yml
-      vars: { product: 'demo' }
+      vars: { product: 'demo', extras: { chocolatey: { name: thisisanextra, pinned: False, state: present, timeout: 666, version: "69.0.0"} } }
+
+
