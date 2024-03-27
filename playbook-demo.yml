@@ -8,6 +8,6 @@
                                                        pinned: False, 
                                                        state: present, 
                                                        timeout: 666, 
-                                                       version: "69.0.0"} } }
+                                                       version: "69.0.0" } } }
 
 
