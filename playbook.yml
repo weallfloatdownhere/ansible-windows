@@ -1,6 +1,6 @@
 - name: Common windows tasks executer
   hosts: localhost
   tasks:
-    - name: Install Sample 1
+    - name: Install Demo
       include_tasks: tasks/main.yml
-      vars: { product: 'sample-1' }
+      vars: { product: 'demo' }
