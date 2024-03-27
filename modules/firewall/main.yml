@@ -1,0 +1,35 @@
+- name: Set default values
+  ansible.builtin.set_fact:
+    firewall_rule_name: "{{ job_values.name }}" 
+    firewall_rule_localport: "{{ job_values.localport | default('any') }}"
+    firewall_rule_action: "{{ job_values.action       | default('allow') }}" 
+    firewall_rule_direction: "{{ job_values.direction | default('in') }}" 
+    firewall_rule_protocol: "{{ job_values.protocol   | default('any') }}" 
+    firewall_rule_state: "{{ job_values.state         | default('present') }}" 
+    firewall_rule_enabled: "{{ job_values.enabled     | default('True') }}" 
+    firewall_rule_program: "{{ job_values.program     | default('any') }}"
+
+- debug:
+    msg: 
+    - "{{ firewall_rule_name }}" 
+    - "{{ firewall_rule_localport }}" 
+    - "{{ firewall_rule_action }}"
+    - "{{ firewall_rule_direction }}"
+    - "{{ firewall_rule_protocol }}"
+    - "{{ firewall_rule_state }}"
+    - "{{ firewall_rule_enabled }}"
+    - "{{ firewall_rule_program }}"
+
+- name: Windows
+  block:
+    - name: Adding firewall rule
+      community.windows.win_firewall_rule:
+        name: "{{ firewall_rule_name }}"
+        localport: "{{ firewall_rule_localport }}"
+        action: "{{ firewall_rule_action }}"
+        direction: "{{ firewall_rule_direction }}"
+        protocol: "{{ firewall_rule_protocol }}"
+        program: "{{ firewall_rule_program }}"
+        state: "{{ firewall_rule_state }}"
+        enabled: "{{ firewall_rule_enabled }}"
+  when: '"windows" in ansible_system|lower'

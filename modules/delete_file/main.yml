@@ -1,0 +1,21 @@
+- name: Set default values
+  ansible.builtin.set_fact:
+    delete_path: "{{ job_values.path | default('') }}" 
+
+- debug:
+    msg: 
+    - "{{ delete_path }}" 
+
+- name: Windows
+  block:
+    - name: Getting files/directories status
+      win_stat:
+        path: "{{ delete_path }}"
+      register: reg_delete_path
+
+    - name: "Cleaning specified file."
+      win_file:
+        path: "{{ delete_path }}"
+        state: absent
+      when: reg_delete_path.stat.exists
+  when: '"windows" in ansible_system|lower'

@@ -24,7 +24,7 @@
     - name: Ensure that the archive before trying to extract its content
       win_stat:
         path: "{{ download_destination }}"
-      register: "{{ stat_downloaded_archive }}"      
+      register: "stat_downloaded_archive"      
 
     - name: Recursively decompress GZ files in ApplicationLogs.zip
       win_unzip:

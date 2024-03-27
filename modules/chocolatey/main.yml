@@ -1,7 +1,7 @@
 - name: Set default values
   ansible.builtin.set_fact:
     package_name: "{{ job_values.name | default(None) }}" 
-    package_state: "{{ job_values.state | default('present') }}" 
+    package_state: "{{ job_values.state | default('latest') }}" 
     package_version: "{{ job_values.version | default(None) }}"
     package_timeout: "{{ job_values.timeout | default(2700) }}"
     package_pinned: "{{ job_values.pinned | default(False) }}"

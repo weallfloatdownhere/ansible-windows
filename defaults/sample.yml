@@ -100,3 +100,17 @@ jobs:
       - executables:
             path: 'C:\temp\SAMPLE_x64_ENU\SETUP.EXE'
             product_id: 'Microsoft Demo Test'
+
+      - delete_file:
+            path: 'C:\temp\test.txt'
+
+      - firewall:
+            name: SMTP
+            localport: 25
+            action: allow
+            direction: in
+            protocol: tcp
+            state: present
+            enabled: yes
+            program: any
+            condition: 1<2
