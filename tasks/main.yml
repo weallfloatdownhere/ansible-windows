@@ -1,6 +1,6 @@
 - name: Set default values
   set_fact:
-    product_name: "{{ product | default(None) }}" 
+    product_name: "{{ target_product | default(None) }}" 
 
 - debug:
     msg: 

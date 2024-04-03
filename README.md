@@ -14,7 +14,7 @@ To quickly test the role, `create` a new playbook in the role directory with the
   tasks:
     - name: Install Demo
       include_tasks: tasks/main.yml
-      vars: { product: 'demo', extras: { chocolatey: { name: thisisanextra, 
+      vars: { target_product: 'demo', extras: { chocolatey: { name: thisisanextra, 
                                                        pinned: False, 
                                                        state: present, 
                                                        timeout: 666, 
