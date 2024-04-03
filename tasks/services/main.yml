@@ -1,14 +1,16 @@
 - name: Set default values
   set_fact:
-    winservice_name: "{{ job_values.name | default('undefined') }}" 
-    winservice_start_mode: "{{ job_values.start_mode | default('auto') }}" 
-    winservice_state: "{{ job_values.state | default('started') }}"
+    winservice_name: "{{ job_values.name                   | default('undefined') }}" 
+    winservice_start_mode: "{{ job_values.start_mode       | default('auto') }}" 
+    winservice_state: "{{ job_values.state                 | default('started') }}"
+    winservice_ignore_errors: "{{ job_values.ignore_errors | default(False) }}"
 
 - debug:
     msg: 
     - "{{ winservice_name }}" 
     - "{{ winservice_start_mode }}" 
     - "{{ winservice_state }}"
+    - "{{ winservice_ignore_errors }}"
 
 - name: Windows
   block:
@@ -17,4 +19,5 @@
         name: "{{ winservice_name }}"
         start_mode: "{{ winservice_start_mode }}"
         state: "{{ winservice_state }}"
+      ignore_errors: "{{ winservice_ignore_errors }}"
   when: '"windows" in ansible_system|lower'

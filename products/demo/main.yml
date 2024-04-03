@@ -42,6 +42,7 @@ jobs:
       state: present
       timeout: 2700
       version: "1.0.0"
+      ignore_errors: True
 
 - download:
       url: 'http://urldownload2.com'
@@ -54,6 +55,7 @@ jobs:
       url: 'http://urldownload1.com'
       destination: "destination1"
       force: False
+      ignore_errors: True
 
 - regedits:
       name: Language Hotkey
@@ -67,6 +69,7 @@ jobs:
       path: HKCU:\Keyboard Layout\Toggle
       state: absent
       delete_key: yes
+      ignore_errors: True
 
 - services:
       name: 'spooler'
@@ -87,6 +90,7 @@ jobs:
       reboot_if_needed: False
       include_sub_features: False
       include_management_tools: True
+      ignore_errors: True
 
 - executables:
       path: 'C:\temp\SQLEXPR_x64_ENU\SETUP.EXE'
@@ -117,6 +121,7 @@ jobs:
       state: present
       enabled: yes
       program: any
+      ignore_errors: True
 
 - template:
       source: templates/configuration.ini.j2

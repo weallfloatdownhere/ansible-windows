@@ -1,12 +1,14 @@
 - name: Set default values
   set_fact:
-    shortcut_source: "{{ job_values.source | default(None) }}"
-    shortcut_destination: "{{ job_values.destination | default(None) }}"
+    shortcut_source: "{{ job_values.source               | default(None) }}"
+    shortcut_destination: "{{ job_values.destination     | default(None) }}"
+    shortcut_ignore_errors: "{{ job_values.ignore_errors | default(True) }}"
 
 - debug:
     msg: 
     - "{{ shortcut_source }}" 
-    - "{{ shortcut_destination }}" 
+    - "{{ shortcut_destination }}"
+    - "{{ shortcut_ignore_errors }}" 
 
 - name: Windows
   block:
@@ -19,5 +21,6 @@
       win_shortcut:
         src: "{{ shortcut.source }}"
         dest: "{{ shortcut.destination }}"
+      ignore_errors: "{{ shortcut_ignore_errors }}"
       when: reg_shortcut.stat.exists
   when: '"windows" in ansible_system|lower'

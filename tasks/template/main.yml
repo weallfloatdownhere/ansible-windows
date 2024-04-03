@@ -2,12 +2,13 @@
   set_fact:
     template_file_source: "{{ job_values.source }}"
     template_file_destination: "{{ job_values.destination }}"
-    template_file_owner: "{{ job_values.owner | default(None) }}"
-    template_file_group: "{{ job_values.group | default(None) }}"
-    template_file_mode: "{{ job_values.mode  | default(None) }}"
-    template_file_force: "{{ job_values.force | default(True) }}"
-    template_file_template_vars: "{{ job_values.template.vars | default({}) }}"
+    template_file_owner: "{{ job_values.owner                  | default(None) }}"
+    template_file_group: "{{ job_values.group                  | default(None) }}"
+    template_file_mode: "{{ job_values.mode                    | default(None) }}"
+    template_file_force: "{{ job_values.force                  | default(True) }}"
+    template_file_template_vars: "{{ job_values.template.vars  | default({}) }}"
     template_newline_sequence: "{{ job_values.newline_sequence | default('\r\n') }}"
+    template_ignore_errors: "{{ job_values.ignore_errors       | default(False) }}"
 
 - debug:
     msg: 
@@ -19,6 +20,7 @@
     - "{{ template_file_force }}"
     - "{{ template_file_template_vars }}"
     - "{{ template_newline_sequence }}"
+    - "{{ template_ignore_errors }}"
 
 - name: Windows
   block:
@@ -32,4 +34,5 @@
         force: "{{ template_file_force }}"
         newline_sequence: "{{ template_newline_sequence }}"
         vars: "{{ template_file_template_vars }}"
+      ignore_errors: "{{ template_ignore_errors }}"
   when: '"windows" in ansible_system|lower'

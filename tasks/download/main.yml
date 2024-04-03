@@ -1,9 +1,10 @@
 - name: Set default values
   set_fact:
-    download_url: "{{ job_values.url | default('undefined') }}" 
-    download_destination: "{{ job_values.destination | default(playbook_dir) }}" 
-    download_force: "{{ job_values.force | default(False) }}" 
+    download_url: "{{ job_values.url                                 | default('undefined') }}" 
+    download_destination: "{{ job_values.destination                 | default(playbook_dir) }}" 
+    download_force: "{{ job_values.force                             | default(False) }}" 
     download_archive_destination: "{{ job_values.archive.destination | default('undefined') }}"
+    download_ignore_errors: "{{ job_values.ignore_errors             | default(False) }}" 
 
 - debug:
     msg: 
@@ -11,6 +12,7 @@
     - "{{ download_destination }}" 
     - "{{ download_force }}" 
     - "{{ download_archive_destination }}"
+    - "{{ download_ignore_errors }}"
 
 - name: Windows
   block:
@@ -19,6 +21,7 @@
         url: "{{ download_url }}"
         dest: "{{ download_destination }}"
         force: "{{ download_force }}"
+      ignore_errors: "{{ download_ignore_errors }}"
       when: download.archive.destination != 'undefined'
 
     - name: Ensure that the archive before trying to extract its content
@@ -32,5 +35,6 @@
         dest: "{{ download_archive_destination }}"
         # recurse: yes
         # delete_archive: yes
+      ignore_errors: "{{ download_ignore_errors }}"
       when: download_archive_destination != 'undefined' and stat_downloaded_archive.stat.exists
   when: '"windows" in ansible_system|lower'

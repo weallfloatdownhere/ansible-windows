@@ -1,11 +1,12 @@
 - name: Set default values
   set_fact:
-    feature_name: "{{ job_values.name | default(None) }}" 
-    feature_state: "{{ job_values.state | default('present') }}" 
-    feature_source: "{{ job_values.source | default(None) }}"
-    feature_include_sub_features: "{{ job_values.include_sub_features | default(False) }}"
+    feature_name: "{{ job_values.name                                         | default(None) }}" 
+    feature_state: "{{ job_values.state                                       | default('present') }}" 
+    feature_source: "{{ job_values.source                                     | default(None) }}"
+    feature_include_sub_features: "{{ job_values.include_sub_features         | default(False) }}"
     feature_include_management_tools: "{{ job_values.include_management_tools | default(False) }}"
-    feature_reboot_if_needed: "{{ job_values.reboot_if_needed | default(False) }}"
+    feature_reboot_if_needed: "{{ job_values.reboot_if_needed                 | default(False) }}"
+    feature_ignore_errors: "{{ job_values.ignore_errors                       | default(False) }}"
 
 - debug:
     msg: 
@@ -15,6 +16,7 @@
     - "{{ feature_include_sub_features }}"
     - "{{ feature_include_management_tools }}"
     - "{{ feature_reboot_if_needed }}"
+    - "{{ feature_ignore_errors }}"
 
 - name: Windows
   block:
@@ -25,6 +27,7 @@
         source: "{{ feature_source }}"
         include_sub_features: "{{ feature_include_sub_features }}"
         include_management_tools: "{{ feature_include_management_tools }}"
+      ignore_errors: "{{ feature_ignore_errors }}"
       register: win_feature
 
     - name: Reboot if installing the feature requires it

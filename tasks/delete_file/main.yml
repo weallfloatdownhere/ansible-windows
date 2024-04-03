@@ -1,10 +1,12 @@
 - name: Set default values
   set_fact:
-    delete_path: "{{ job_values.path | default('') }}" 
+    delete_path: "{{ job_values.path          | default('') }}"
+    delete_ignore_errors: "{{ job_values.path | default(False) }}"
 
 - debug:
     msg: 
-    - "{{ delete_path }}" 
+    - "{{ delete_path }}"
+    - "{{ delete_ignore_errors }}" 
 
 - name: Windows
   block:
@@ -17,5 +19,6 @@
       win_file:
         path: "{{ delete_path }}"
         state: absent
+      ignore_errors: "{{ delete_ignore_errors }}"
       when: reg_delete_path.stat.exists
   when: '"windows" in ansible_system|lower'

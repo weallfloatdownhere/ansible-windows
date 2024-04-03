@@ -1,13 +1,14 @@
 - name: Set default values
   set_fact:
     firewall_rule_name: "{{ job_values.name }}" 
-    firewall_rule_localport: "{{ job_values.localport | default('any') }}"
-    firewall_rule_action: "{{ job_values.action       | default('allow') }}" 
-    firewall_rule_direction: "{{ job_values.direction | default('in') }}" 
-    firewall_rule_protocol: "{{ job_values.protocol   | default('any') }}" 
-    firewall_rule_state: "{{ job_values.state         | default('present') }}" 
-    firewall_rule_enabled: "{{ job_values.enabled     | default('True') }}" 
-    firewall_rule_program: "{{ job_values.program     | default('any') }}"
+    firewall_rule_localport: "{{ job_values.localport    | default('any') }}"
+    firewall_rule_action: "{{ job_values.action          | default('allow') }}" 
+    firewall_rule_direction: "{{ job_values.direction    | default('in') }}" 
+    firewall_rule_protocol: "{{ job_values.protocol      | default('any') }}" 
+    firewall_rule_state: "{{ job_values.state            | default('present') }}" 
+    firewall_rule_enabled: "{{ job_values.enabled        | default('True') }}" 
+    firewall_rule_program: "{{ job_values.program        | default('any') }}"
+    firewall_ignore_errors: "{{ job_values.ignore_errors | default(False) }}"
 
 - debug:
     msg: 
@@ -19,6 +20,7 @@
     - "{{ firewall_rule_state }}"
     - "{{ firewall_rule_enabled }}"
     - "{{ firewall_rule_program }}"
+    - "{{ firewall_ignore_errors }}"
 
 - name: Windows
   block:
@@ -32,4 +34,5 @@
         program: "{{ firewall_rule_program }}"
         state: "{{ firewall_rule_state }}"
         enabled: "{{ firewall_rule_enabled }}"
+      ignore_errors: "{{ firewall_ignore_errors }}"
   when: '"windows" in ansible_system|lower'
