@@ -8,7 +8,7 @@
 
 - name: Include default vars
   include_vars:
-    file: "catalog/{{ product_name }}/main.yml"
+    file: "catalog/{{ product_name }}/deployment/main.yml"
     name: jobs
 
 - name: Starting the jobs.
