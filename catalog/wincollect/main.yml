@@ -1,5 +1,5 @@
 jobs:
 - chocolatey:
-      name: test2
+      name: wincollect
       state: present
       version: "1.0.0"
