@@ -12,7 +12,7 @@
     name: jobs
 
 - name: Starting the jobs.
-  include_tasks: "tasks/modules/{{ current_job.key }}/main.yml"
+  include_tasks: "tasks/{{ current_job.key }}/main.yml"
   vars: { job_values: "{{ current_job.value | default({}) }}" }
   with_dict: "{{ jobs.jobs }}"
   loop_control: { loop_var: current_job }
