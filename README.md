@@ -77,10 +77,10 @@ jobs:
 
 - download:
       url: 'http://urldownload2.com'
-      destination: "destination2"
+      destination: "/tmp/destination/"
       force: True
       archive:
-        destination: "archive_destination2"
+        destination: "/tmp/unarchive_destination/"
 
 - download:
       url: 'http://urldownload1.com'
@@ -175,4 +175,5 @@ jobs:
 # These extras vars can be added from anywhere, precedent roles, previously loaded variable, etc.
 # In this case, these extras are specified by the `playbook-demo.yml`
 - "{{ extras | default({}) }}"
+
 ```
