@@ -1,0 +1,5 @@
+jobs:
+- chocolatey:
+      name: test2
+      state: present
+      version: "1.0.0"
