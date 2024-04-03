@@ -143,7 +143,7 @@ jobs:
 - delete_file:
       path: 'C:\temp\test.txt'
 
-- firewall:
+- firewall_rule:
       name: SMTP
       localport: 25
       action: allow
@@ -163,6 +163,14 @@ jobs:
       force: True
       template:
         vars: { test: test, test1: test1, test2: test2 }
+
+- win_dsc:
+      resource_name: win_dsc_test
+      group_name: test_group
+      members:
+            - member1
+            - member2
+            - member3
 
 # These extras vars can be added from anywhere, precedent roles, previously loaded variable, etc.
 # In this case, these extras are specified by the `playbook-demo.yml`

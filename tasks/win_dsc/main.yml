@@ -1,0 +1,23 @@
+- name: Set default values
+  set_fact:
+    win_dsc_resource_name: "{{ job_values.resource_name | default(None) }}" 
+    win_dsc_group_name: "{{ job_values.group_name       | default(None) }}" 
+    win_dsc_members: "{{ job_values.members             | default([]) }}"
+
+- debug:
+    msg: 
+    - "{{ win_dsc_resource_name }}" 
+    - "{{ win_dsc_group_name }}" 
+    - "{{ win_dsc_members }}"
+
+- name: Windows
+  block:
+    - name: Adding Xgroup
+      ansible.windows.win_dsc:
+        resource_name: "{{ win_dsc_resource_name }}"
+        GroupName: "{{ win_dsc_group_name }}" 
+        members: "{{ win_dsc_member }}"
+      loop: "{{ win_dsc_members }}"
+      loop_control:
+        loop_var: win_dsc_member
+  when: '"windows" in ansible_system|lower'
