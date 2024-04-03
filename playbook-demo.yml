@@ -1,9 +1,0 @@
-# ansible-playbook playbook-demo.yml -i localhost
-- name: Common windows tasks executer
-  hosts: localhost
-  tasks:
-    - name: Install Demo
-      include_tasks: tasks/main.yml
-      vars: { target_product: 'demo', extras: { chocolatey: { name: thisisanextra, state: present, version: "69.0.0" } } }
-
-
