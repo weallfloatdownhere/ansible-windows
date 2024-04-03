@@ -44,16 +44,16 @@ jobs:
       version: "1.0.0"
 
 - download:
+      url: 'http://urldownload2.com'
+      destination: "destination2"
+      force: True
+      archive:
+        destination: "archive_destination2"
+
+- download:
       url: 'http://urldownload1.com'
       destination: "destination1"
       force: False
-
-- download:
-      url: 'http://urldownload2.com'
-      destination: "destination2"
-      force: False
-      archive:
-        destination: "archive_destination2"
 
 - regedits:
       name: Language Hotkey
@@ -117,7 +117,6 @@ jobs:
       state: present
       enabled: yes
       program: any
-      condition: 1<2
 
 - template:
       source: templates/configuration.ini.j2

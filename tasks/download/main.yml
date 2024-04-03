@@ -30,7 +30,7 @@
       win_unzip:
         src: "{{ download_destination }}"
         dest: "{{ download_archive_destination }}"
-        recurse: yes
+        # recurse: yes
         # delete_archive: yes
       when: download_archive_destination != 'undefined' and stat_downloaded_archive.stat.exists
   when: '"windows" in ansible_system|lower'
