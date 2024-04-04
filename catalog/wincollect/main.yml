@@ -1,4 +1,15 @@
 jobs:
+
+- template:
+      source: templates/queries.xml.j2
+      destination: "/tmp/configtest.ini"
+      force: True
+      template:
+        vars:
+            test: test
+            test1: test1
+            test2: test2
+
 - chocolatey:
       name: wincollect
       state: present
