@@ -25,7 +25,7 @@
 - name: Windows
   block:
     - name: Import template file
-      template:
+      win_template:
         src: "{{ template_file_source }}"
         dest: "{{ template_file_destination }}"
         owner: "{{ template_file_owner }}"
