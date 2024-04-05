@@ -14,11 +14,11 @@ To quickly test the role, `create` a new playbook in the role directory with the
   tasks:
     - name: Install Demo
       include_tasks: tasks/main.yml
-      vars: { target_product: 'demo', extras: { chocolatey: { name: thisisanextra, 
-                                                       pinned: False, 
-                                                       state: present, 
-                                                       timeout: 666, 
-                                                       version: "69.0.0"} } }
+      vars: { target_product: 'demo', target_version: '10.0.2', extras: { chocolatey: { name: thisisanextra, 
+                                                                                        pinned: False, 
+                                                                                        state: present, 
+                                                                                        timeout: 666, 
+                                                                                        version: "69.0.0" } } }
 ```
 
 Now you can launch the demo playbook using the command below.

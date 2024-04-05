@@ -1,5 +1,4 @@
 jobs:
-
 - template:
       source: templates/queries.xml.j2
       destination: "/tmp/configtest.ini"
