@@ -1,14 +1,16 @@
 - name: Set default values
   set_fact:
-    win_dsc_resource_name: "{{ job_values.resource_name | default(None) }}" 
-    win_dsc_group_name: "{{ job_values.group_name       | default(None) }}" 
-    win_dsc_members: "{{ job_values.members             | default([]) }}"
+    win_dsc_resource_name: "{{ job_values.resource_name  | default(None) }}" 
+    win_dsc_group_name: "{{ job_values.group_name        | default(None) }}" 
+    win_dsc_members: "{{ job_values.members              | default([]) }}"
+    win_dsc_ignore_errors: "{{ job_values._ignore_errors | default([]) }}"
 
 - debug:
     msg: 
     - "{{ win_dsc_resource_name }}" 
     - "{{ win_dsc_group_name }}" 
     - "{{ win_dsc_members }}"
+    - "{{ win_dsc_ignore_errors }}"
 
 - name: Windows
   block:
@@ -20,4 +22,5 @@
       loop: "{{ win_dsc_members }}"
       loop_control:
         loop_var: win_dsc_member
+      ignore_errors: "{{ win_dsc_ignore_errors }}"
   when: '"windows" in ansible_system|lower'
