@@ -1,5 +1,58 @@
 # Ansible-windows
 
+```
+Function DaysBetween(startDate, endDate)
+    Dim startDateTime, endDateTime
+    startDateTime = CDate(startDate)
+    endDateTime = CDate(endDate)
+    DaysBetween = DateDiff("d", startDateTime, endDateTime)
+End Function
+
+Function FormatDate(inputDate)
+    If Len(inputDate) <> 8 Then
+        FormatDate = "Invalid date format"
+        Exit Function
+    End If
+    Dim year, month, day
+    year = Left(inputDate, 4)
+    month = Mid(inputDate, 5, 2)
+    day = Right(inputDate, 2)
+    FormatDate = year & "-" & month & "-" & day
+End Function
+
+filename = "C:\Users\anon\Desktop\test.txt"
+Set fso = CreateObject("Scripting.FileSystemObject")
+Set f = fso.OpenTextFile(filename)
+
+Dim liscence_date
+
+Do Until f.AtEndOfStream
+  liscence_date = f.ReadLine
+  exit do
+Loop
+f.Close
+
+Dim date1, date2, daysDiff
+
+current_date = Year(Date) & Month(Date) & Day(Date)
+
+date1 = FormatDate("20240901")
+date2 = FormatDate("20240923")
+daysDiff = DaysBetween(date1, date2)
+
+if CInt(daysDiff) > 30 then
+WScript.Echo "Bigger"
+Else
+WScript.Echo "Lower"
+End If
+
+WScript.Echo "Number of days between " & date1 & " and " & date2 & " is: " & daysDiff
+
+
+
+
+```
+
 Generic Ansible role dedicated to execute various commons Windows tasks by mostly just providing a set of variables.
 
 # Getting started
