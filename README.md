@@ -17,6 +17,19 @@ Function FormatDate(inputDate)
     year = Left(inputDate, 4)
     month = Mid(inputDate, 5, 2)
     day = Right(inputDate, 2)
+	
+	if Len(day) == 1 Then
+		day = "0" & day
+	End if
+	
+	if Len(month) == 1 Then
+		month = "0" & month
+	End if
+	
+	if Len(year) == 1 Then
+		year = "0" & year
+	End if
+	
     FormatDate = year & "-" & month & "-" & day
 End Function
 
@@ -40,6 +53,9 @@ date1 = FormatDate("20240901")
 date2 = FormatDate("20240923")
 daysDiff = DaysBetween(date1, date2)
 
+
+
+
 if CInt(daysDiff) > 30 then
 WScript.Echo "Bigger"
 Else
@@ -47,6 +63,9 @@ WScript.Echo "Lower"
 End If
 
 WScript.Echo "Number of days between " & date1 & " and " & date2 & " is: " & daysDiff
+
+
+
 
 
 
