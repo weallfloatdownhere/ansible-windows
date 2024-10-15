@@ -68,35 +68,16 @@ Function ReturnToCheckMK()
 End Function
 
 Function Main()
-	' working
-	xmlline = GetLiscenceDateExpiration(LicenceFilePath)
-	
-	' working
-	current_date = GetCurrentDate()
-	
-	' working
-	license_date = ExtractDateFromXML(xmlline)
-	
-	' working
-	date_between = DaysBetween(license_date, current_date)
-	
-	' test
-	WScript.Echo date_between
-	
-	' Check if there is 30 days or more between license_date and current_date
-	if CInt(date_between) > LicenseDaysLimit then
+	if CInt(DaysBetween(ExtractDateFromXML(GetLiscenceDateExpiration(LicenceFilePath)), GetCurrentDate())) > LicenseDaysLimit then
 		WScript.Echo 1
 		WScript.Quit 1
 	Else
 		WScript.Echo 0
 		WScript.Quit 0
 	End If
-	
 End Function
 
-
 Main()
-
 
 
 
