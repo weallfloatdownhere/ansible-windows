@@ -1,68 +1,101 @@
 # Ansible-windows
 
 ```
-Function DaysBetween(startDate, endDate)
-    Dim startDateTime, endDateTime
-    startDateTime = CDate(startDate)
-    endDateTime = CDate(endDate)
-    DaysBetween = DateDiff("d", startDateTime, endDateTime)
-End Function
+rem LicenceFilePath = "C:\ProgramData\chocolatey\lib\chocolatey-license\tools\chocolatey.license.xml"
 
-Function FormatDate(inputDate)
-    If Len(inputDate) <> 8 Then
-        FormatDate = "Invalid date format"
+LicenceFilePath = "C:\Users\anon\Desktop\test.txt"
+LicenseDaysLimit = 30
+
+Function DaysBetween(startDate, endDate)
+    If Not IsDate(startDate) Or Not IsDate(endDate) Then
+        DaysBetween = "Invalid Date"
         Exit Function
     End If
-    Dim year, month, day
-    year = Left(inputDate, 4)
-    month = Mid(inputDate, 5, 2)
-    day = Right(inputDate, 2)
-	
-	if Len(day) == 1 Then
-		day = "0" & day
-	End if
-	
-	if Len(month) == 1 Then
-		month = "0" & month
-	End if
-	
-	if Len(year) == 1 Then
-		year = "0" & year
-	End if
-	
-    FormatDate = year & "-" & month & "-" & day
+    DaysBetween = DateDiff("d", CDate(startDate), CDate(endDate))
 End Function
 
-filename = "C:\Users\anon\Desktop\test.txt"
-Set fso = CreateObject("Scripting.FileSystemObject")
-Set f = fso.OpenTextFile(filename)
+Function GetLiscenceDateExpiration(liscence_file)
+    Dim fso, file, line
+	lineNumber = 0
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    If Not fso.FileExists(liscence_file) Then
+        Exit Function
+    End If
+	Set file = fso.OpenTextFile(liscence_file, 1)
+    Do While Not file.AtEndOfStream
+        line = file.ReadLine
+		lineNumber = lineNumber + 1
+        If lineNumber = 2 Then
+            ReadSecondLine = line
+			GetLiscenceDateExpiration = line
+            Exit Do
+        End If
+    Loop
+    file.Close
+    Set file = Nothing
+    Set fso = Nothing
+End Function
 
-Dim liscence_date
+Function ExtractDateFromXML(xmlLine)
+    Dim regex, matches
+    Set regex = New RegExp
+    regex.Pattern = "(\d{4}-\d{2}-\d{2}|\d{2}/\d{2}/\d{4}|\d{2}-\d{2}-\d{4})"
+    regex.Global = True
+    Set matches = regex.Execute(xmlLine)
+    If matches.Count > 0 Then
+        ExtractDateFromXML = matches(0).Value
+    Else
+        ExtractDateFromXML = "No date found."
+    End If
+End Function
 
-Do Until f.AtEndOfStream
-  liscence_date = f.ReadLine
-  exit do
-Loop
-f.Close
+Function GetCurrentDate()
+    Dim currentDate, formattedDate
+    currentDate = Now()
+    formattedDate = Year(currentDate) & "-" & _
+                    Right("0" & Month(currentDate), 2) & "-" & _
+                    Right("0" & Day(currentDate), 2)
+    GetCurrentDate = formattedDate
+End Function
 
-Dim date1, date2, daysDiff
+Function ReturnToCheckMK()
+    Dim currentDate, formattedDate
+    currentDate = Now()
+    formattedDate = Year(currentDate) & "-" & _
+                    Right("0" & Month(currentDate), 2) & "-" & _
+                    Right("0" & Day(currentDate), 2)
+    GetCurrentDate = formattedDate
+End Function
 
-current_date = Year(Date) & Month(Date) & Day(Date)
+Function Main()
+	' working
+	xmlline = GetLiscenceDateExpiration(LicenceFilePath)
+	
+	' working
+	current_date = GetCurrentDate()
+	
+	' working
+	license_date = ExtractDateFromXML(xmlline)
+	
+	' working
+	date_between = DaysBetween(license_date, current_date)
+	
+	' test
+	WScript.Echo date_between
+	
+	' Check if there is 30 days or more between license_date and current_date
+	if CInt(date_between) > LicenseDaysLimit then
+		WScript.Echo 1
+		WScript.Quit 1
+	Else
+		WScript.Echo 0
+		WScript.Quit 0
+	End If
+	
+End Function
 
-date1 = FormatDate("20240901")
-date2 = FormatDate("20240923")
-daysDiff = DaysBetween(date1, date2)
 
-
-
-
-if CInt(daysDiff) > 30 then
-WScript.Echo "Bigger"
-Else
-WScript.Echo "Lower"
-End If
-
-WScript.Echo "Number of days between " & date1 & " and " & date2 & " is: " & daysDiff
+Main()
 
 
 
